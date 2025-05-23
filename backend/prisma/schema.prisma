@@ -1,5 +1,52 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id          String   @id @default(uuid())
+  email       String   @unique
+  firebaseUid String   @unique
+  plan        String
+  mwsToken    String?
+  createdAt   DateTime @default(now())
+  products    Product[]
+  shippingQuotes ShippingQuote[]
+  syncLogs    SyncLog[]
+}
+
+model Product {
+  id         String   @id @default(uuid())
+  asin       String
+  title      String
+  price      Float
+  inventory  Int
+  owner      User     @relation(fields: [ownerId], references: [id])
+  ownerId    String
+  lastSynced DateTime @default(now())
+}
+
+model ShippingQuote {
+  id         String   @id @default(uuid())
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  zipTo      String
+  weightLbs  Float
+  rateUsd    Float
+  provider   String
+  createdAt  DateTime @default(now())
+}
+
+model SyncLog {
+  id           String   @id @default(uuid())
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String
+  service      String
+  status       String
+  errorMessage String?
+  timestamp    DateTime @default(now())
+}
