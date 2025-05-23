@@ -2,3 +2,5 @@
 .env.local
 .env.example
 firebase-service-account.json
+node_module
+
