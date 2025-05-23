@@ -1,7 +1,9 @@
 // /backend/utils/firebaseAdmin.js
-import { initializeApp, applicationDefault, cert } from 'firebase-admin/app';
+import { initializeApp, cert, getApps } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
-import * as fs from 'fs';
+import dotenv from 'dotenv';
+
+dotenv.config(); // make sure env is loaded
 
 const serviceAccount = {
   projectId: process.env.FIREBASE_PROJECT_ID,
@@ -9,11 +11,14 @@ const serviceAccount = {
   privateKey: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
 };
 
-if (!getAuth.apps?.length) {
+if (!serviceAccount.projectId || !serviceAccount.clientEmail || !serviceAccount.privateKey) {
+  throw new Error('🔥 Firebase Admin ENV variables are missing or malformed');
+}
+
+if (!getApps().length) {
   initializeApp({
     credential: cert(serviceAccount),
   });
 }
 
 export const adminAuth = getAuth();
-
