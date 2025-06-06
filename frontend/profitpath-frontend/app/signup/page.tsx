@@ -1,4 +1,3 @@
-// /frontend/profitpath-frontend/app/signup/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -21,7 +20,11 @@ export default function SignupPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (err) {
-      setError("Signup failed: " + err.message);
+      if (err instanceof Error) {
+        setError("Signup failed: " + err.message);
+      } else {
+        setError("Signup failed: Unknown error");
+      }
     }
   };
 
