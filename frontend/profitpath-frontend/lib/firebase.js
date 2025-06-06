@@ -1,18 +1,14 @@
-// /frontend/lib/firebase.js
-import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
-import { getAuth } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-auth.js";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBCq-KrFAzviAI3AAnkAX7N-SQMPattoxg",
-  authDomain: "profitpath-fa9b6.firebaseapp.com",
-  projectId: "profitpath-fa9b6",
-  storageBucket: "profitpath-fa9b6.appspot.com",
-  messagingSenderId: "486507702021",
-  appId: "1:486507702021:web:ba81e1db9a4251e3d8796c",
-  measurementId: "G-ZYZCRGH71K", // optional, used for analytics only
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
-const app = !getApps().length ? initializeApp(firebaseConfig) : getApps()[0];
-const auth = getAuth(app);
-
-export { auth };
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
