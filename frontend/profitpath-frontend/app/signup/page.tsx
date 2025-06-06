@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
@@ -20,11 +21,8 @@ export default function SignupPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (err) {
-      if (err instanceof Error) {
-        setError("Signup failed: " + err.message);
-      } else {
-        setError("Signup failed: Unknown error");
-      }
+      const error = err as FirebaseError;
+      setError("Signup failed: " + (error.message || "Unknown error"));
     }
   };
 

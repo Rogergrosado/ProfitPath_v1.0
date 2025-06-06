@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { FirebaseError } from "firebase/app";
 import { auth } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 
@@ -16,11 +17,8 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (err) {
-      if (err instanceof Error) {
-        setError("Login failed: " + err.message);
-      } else {
-        setError("Login failed: Unknown error");
-      }
+      const error = err as FirebaseError;
+      setError("Login failed: " + (error.message || "Unknown error"));
     }
   };
 
@@ -51,4 +49,3 @@ export default function LoginPage() {
     </div>
   );
 }
-// trigger rebuild
