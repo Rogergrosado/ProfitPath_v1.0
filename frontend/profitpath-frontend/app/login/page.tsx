@@ -1,4 +1,3 @@
-// /frontend/profitpath-frontend/app/login/page.tsx
 "use client";
 
 import { useState } from "react";
@@ -17,7 +16,11 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       router.push("/dashboard");
     } catch (err) {
-      setError("Login failed: " + err.message);
+      if (err instanceof Error) {
+        setError("Login failed: " + err.message);
+      } else {
+        setError("Login failed: Unknown error");
+      }
     }
   };
 
