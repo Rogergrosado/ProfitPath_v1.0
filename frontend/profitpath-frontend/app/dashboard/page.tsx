@@ -1,32 +1,25 @@
 'use client';
 
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import { useAuth } from '@/components/auth/AuthProvider';
-import { getAuth, signOut } from 'firebase/auth';
-import { useRouter } from 'next/navigation';
+import DashboardLayout from '@/components/layout/DashboardLayout';
+import StatCard from '@/components/dashboard/StatCard';
+import ChartPlaceholder from '@/components/dashboard/ChartPlaceholder';
 
 export default function DashboardPage() {
-  const { user } = useAuth();
-  const router = useRouter();
-
-  const handleLogout = async () => {
-    const auth = getAuth();
-    await signOut(auth);
-    router.push('/');
-  };
-
   return (
     <ProtectedRoute>
-      <div className="p-4">
-        <h1 className="text-2xl font-bold">Dashboard</h1>
-        <p className="mb-4">Welcome, {user?.email}</p>
-        <button
-          onClick={handleLogout}
-          className="px-4 py-2 bg-red-500 text-white rounded"
-        >
-          Log out
-        </button>
-      </div>
+      <DashboardLayout>
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+          <StatCard title="Total Sales" value="$12,340" />
+          <StatCard title="Pending Orders" value="87" />
+          <StatCard title="Shipped" value="1,233" />
+        </section>
+
+        <section>
+          <h2 className="text-2xl font-bold mb-4">Sales Chart</h2>
+          <ChartPlaceholder />
+        </section>
+      </DashboardLayout>
     </ProtectedRoute>
   );
 }
