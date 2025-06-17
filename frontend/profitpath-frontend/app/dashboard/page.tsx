@@ -1,24 +1,35 @@
-'use client';
-
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
-import DashboardLayout from '@/components/layout/DashboardLayout';
-import StatCard from '@/components/dashboard/StatCard';
-import ChartPlaceholder from '@/components/dashboard/ChartPlaceholder';
+import DashboardLayout from '@/components/dashboard/DashboardLayout';
+import Header from '@/components/dashboard/Header';
+import KpiCard from '@/components/dashboard/KpiCard';
+import SalesChart from '@/components/dashboard/SalesChart';
+import InventoryTable from '@/components/dashboard/InventoryTable';
+import ResourceCard from '@/components/dashboard/ResourceCard';
+import { TrendingUp, DollarSign, Package, Percent } from 'lucide-react';
 
 export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <DashboardLayout>
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-          <StatCard title="Total Sales" value="$12,340" />
-          <StatCard title="Pending Orders" value="87" />
-          <StatCard title="Shipped" value="1,233" />
-        </section>
+        <Header />
+        <main className="p-6 space-y-6">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <KpiCard title="Revenue" value="$24,532" change="+12.5%" icon={<DollarSign />} color="text-green-600" />
+            <KpiCard title="Profit" value="$8,245" change="+8.3%" icon={<TrendingUp />} color="text-green-600" />
+            <KpiCard title="Units Sold" value="1,243" change="+15.2%" icon={<Package />} color="text-green-600" />
+            <KpiCard title="Conversion Rate" value="3.2%" change="-0.5%" icon={<Percent />} color="text-red-600" />
+          </div>
 
-        <section>
-          <h2 className="text-2xl font-bold mb-4">Sales Chart</h2>
-          <ChartPlaceholder />
-        </section>
+          <div className="flex flex-col md:flex-row gap-4">
+            <SalesChart />
+            <InventoryTable />
+          </div>
+
+          <div>
+            <h3 className="text-lg font-semibold mb-2">Resources & Learning</h3>
+            <ResourceCard />
+          </div>
+        </main>
       </DashboardLayout>
     </ProtectedRoute>
   );
