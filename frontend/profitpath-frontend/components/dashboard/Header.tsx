@@ -1,14 +1,29 @@
-const Header = () => (
-  <div className="ml-60 p-6 flex justify-between items-center bg-white shadow-sm">
-    <div>
-      <h1 className="text-2xl font-semibold">Welcome back, John!</h1>
-      <p className="text-sm text-gray-500">Here’s what's happening with your store today.</p>
-    </div>
-    <div className="flex items-center gap-4">
-      <span className="text-gray-600">John Seller</span>
-      <img src="/avatar.png" alt="avatar" className="w-8 h-8 rounded-full" />
-    </div>
-  </div>
-);
+type Kpi = { label: string; value: string; danger?: boolean };
 
-export default Header;
+const kpis: Kpi[] = [
+  { label: 'Revenue', value: '$24,532' },
+  { label: 'Profit', value: '$8,245' },
+  { label: 'Units Sold', value: '1,243' },
+  { label: 'Conversion Rate', value: '3.2%', danger: true },
+];
+
+export default function Header() {
+  return (
+    <header className="mb-6">
+      <h1 className="text-2xl font-bold mb-1">Welcome back, John!</h1>
+      <p className="text-gray-600">Here's what's happening with your store today.</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mt-4">
+        {kpis.map(({ label, value, danger }) => (
+          <div
+            key={label}
+            className={`bg-white p-4 rounded-lg shadow text-sm ${danger ? 'text-red-600' : ''}`}
+          >
+            {label}
+            <br />
+            <strong className="text-lg">{value}</strong>
+          </div>
+        ))}
+      </div>
+    </header>
+  );
+}
