@@ -1,0 +1,32 @@
+{
+  "name": "profitpath-app",
+  "version": "1.0.0",
+  "description": "ProfitPath - E-commerce Analytics and Management Platform",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend/profitpath-frontend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend/profitpath-frontend",
+    "dev:frontend": "npm run dev --workspace=frontend/profitpath-frontend",
+    "dev:backend": "npm run start --workspace=backend",
+    "build": "npm run build --workspace=frontend/profitpath-frontend",
+    "build:frontend": "npm run build --workspace=frontend/profitpath-frontend",
+    "install:all": "npm install && npm install --workspace=backend && npm install --workspace=frontend/profitpath-frontend",
+    "start": "npm run dev:frontend",
+    "start:frontend": "npm run start --workspace=frontend/profitpath-frontend",
+    "start:backend": "node backend/index.js"
+  },
+  "keywords": [
+    "ecommerce",
+    "analytics",
+    "nextjs",
+    "express",
+    "prisma"
+  ],
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}
